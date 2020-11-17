@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\absenMasuk;
 // use Illuminate\Database\Eloquent;
 
 class UsersController extends Controller
@@ -35,6 +36,20 @@ class UsersController extends Controller
                 'success' => false,
                 'message' => 'Invalid Email or Password',
             ], 401);
+        }
+    }
+
+    public function absenMasuk(Request $request)
+    {
+        $absenMasuk = new absenMasuk;
+        $absenMasuk->jam_masuk = $request->jam_masuk;
+        $absenMasuk->user_id = $request->user_id;
+        $absenMasuk->tanggal = $request->tanggal;
+        $absenMasuk->lokasi = $request->lokasi;
+        if($absenMasuk->save()){
+            return response('Berhasil menyimpan data', 201); 
+        }else{
+            return ["message"=>"Gagal Menyimpan Data"];
         }
     }
 
@@ -82,6 +97,6 @@ class UsersController extends Controller
 
     public function details($id)
     {
-        return User::with('dataUser')->where('id', $id)->first();
+        return User::with('absenMasuk')->where('id', $id)->first();
     }
 }

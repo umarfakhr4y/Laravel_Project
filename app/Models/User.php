@@ -41,8 +41,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function dataUser()
+    // public function dataUser()
+    // {
+    //     return $this->hasOne(DataUser::class);
+    // }
+
+    public function absenMasuk()
     {
-        return $this->hasOne(DataUser::class);
+        return $this->hasOne(absenMasuk::class);
     }
 }
